@@ -51,10 +51,13 @@ The **food opportunity** is parked separately from this project:
 
 | Attribute | Detail |
 |-----------|--------|
-| **Who** | Adults (18+) |
-| **Goal** | Sustainable weight loss and healthier eating habits |
-| **Approach fit** | People who want structure, accountability, and low-GL guidance — not restrictive fad diets |
-| **Not targeting** | Children, families-as-a-unit programmes, or a single narrow demographic (open to anybody) |
+| **Who** | Adults (18+); **core segment 30s–50s, men and women** |
+| **Goal** | Sustainable weight loss, energy, digestion, and wellbeing via low-GL nutrition |
+| **Approach fit** | Structure, accountability, evidence-informed low-GL guidance — not fad diets or slimming-club culture |
+| **Geography** | UK-first (English at launch) |
+| **Not targeting** | Children, families-as-a-unit programmes, GLP-1/medicated weight-loss primary buyers, NHS-free-only seekers |
+
+**Demographics & positioning detail:** [`COMPETITIVE_ANALYSIS.md`](./COMPETITIVE_ANALYSIS.md) §5–§6 · **Messaging tracks:** same doc §6.6 · **Operating model:** [`CLIENT_PORTAL_BUSINESS.md`](./CLIENT_PORTAL_BUSINESS.md) §2
 
 ---
 
@@ -70,9 +73,31 @@ These are the **first services to sell and build the website around**.
 | **Group Coaching** | Shared sessions with peer support | Group calls/workshops, shared milestones, lower price point than 1:1 |
 | **30-Day Workshop / Cohort** | Fixed-length group programme | Sign-up intake, structured curriculum (e.g. 30 days), WhatsApp community, weekly themes from existing meal-plan PDFs |
 | **Menu Plans** | 1-week and 2-week low-GL meal plans | What to eat and portion guidance — **client cooks for themselves**; no food supplied |
-| **Exercise Plans** | Optional add-on or bundled in packages | Plans and guidance when relevant to a client's goals — not the primary brand hook |
+| **Exercise Plans** | **Separate SKU** — sold independently, not bundled by default | Plans and guidance when relevant; not the primary brand hook |
 
-**Pricing (POC reference):** Individual sessions from ~£75; group and workshop pricing TBD.
+**Pricing:** Subscription **£29.99/mo** (annual TBC). Workshop, group, 1:1 **TBC** — see [`OPEN_DECISIONS.md`](./OPEN_DECISIONS.md).
+
+### 3.1b Portal access & programme matrix
+
+| Offering | Portal access | Notes |
+|----------|---------------|-------|
+| **Subscription** (post-trial, £29.99/mo) | **Full** | No WhatsApp peer cohort (workshop only) |
+| **1:1 Coaching** | **Full** | Included; **price TBC** |
+| **30-Day Workshop / Group** | **Full** | Included; WhatsApp tiered by programme; **price TBC** |
+| **Menu Plans** | **Lite** | Reduced logging/agent |
+| **Exercise Plans** | **Included** | Separate SKU; portal bundled |
+
+### 3.1c Self-serve signup & trial (decided)
+
+| Element | Decision |
+|---------|----------|
+| **Registration** | **Self-registration** — public signup, no invite required |
+| **Trial** | **5 days** of portal access and coaching/agent support |
+| **Payment capture** | Credit card collected at signup (Stripe) |
+| **After trial** | User must **subscribe** to continue advice and full portal access |
+| **Non-payment** | Access downgrades or ends; data retained per privacy policy |
+
+Admin invite flow remains for clients Tianna onboards manually (e.g. pre-Stripe workshop intake).
 
 ### 3.2 Community layer (launch-critical)
 
@@ -342,13 +367,17 @@ Parallel track to website build — not all blocked on tech.
 
 ## 13. Open Questions
 
-- Exact pricing for 30-day workshop vs. group vs. 1:1 bundles?
-- WhatsApp: one group per cohort or tiered groups by programme?
-- GL calculation: use full food database (e.g. USDA + GL index) or curated Thrive food list only?
-- Video for sessions: Zoom link vs. integrated provider?
-- Which metrics are mandatory in onboarding vs. optional?
-- When to introduce exercise plans — bundled or separate SKU?
-- Brand partnership criteria and disclosure rules (ASA/FTC alignment)?
+- Exact pricing for **30-day workshop, group, and 1:1** (subscription **£29.99/mo** decided)
+- **Annual subscription discount** percentage
+- **Coaching clients:** separate subscription required or portal-only access bundled?
+- Which **onboarding metrics** mandatory — [`ONBOARDING_METRICS.md`](./ONBOARDING_METRICS.md) (Tianna to select)
+- Phase 2 **auto-send rule IDs** always human-reviewed
+- Microsoft Entra **single- vs multi-tenant** (see `CLIENT_PORTAL_SPEC.md` §6.2)
+- Default **LLM provider** when both OpenAI and Anthropic configured
+
+**Decided:** separate exercise SKU with portal included; menu plan = Lite portal; GL per coach; Zoom; Nutritics future API; `app.thrivewithtianna.com`; localisation planned; DPIA + retention legal review required.
+
+See [`OPEN_DECISIONS.md`](./OPEN_DECISIONS.md) for full list.
 
 ---
 
@@ -358,6 +387,9 @@ Parallel track to website build — not all blocked on tech.
 |-------|---------|
 | `index.html`, `styles.css`, `main.js` | Marketing POC — update per §8 Phase A |
 | `docs/PLATFORM_SPEC.md` | **Source of truth** for product and business scope |
+| `docs/CLIENT_PORTAL_SPEC.md` | Client portal & agent build specification |
+| `docs/CLIENT_PORTAL_BUSINESS.md` | Client portal operating model (personas, coach playbook, agent voice) |
+| `docs/COMPETITIVE_ANALYSIS.md` | Competitor profiles, demographics, positioning |
 | `download_instagram.py` | Instagram asset pipeline for site imagery |
 
 Implementation of the full platform requires backend API, database, auth, payments, booking, and analytics services as phased above.
