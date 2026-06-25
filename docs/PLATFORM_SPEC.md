@@ -239,7 +239,7 @@ Ordered path from static POC to launch-ready marketing site, then platform.
 4. ~~**Add WhatsApp / community mention** — set expectations for cohort groups~~
 5. ~~**Client hub section** — describe dashboard features (meal log, GL projection, progress)~~
 6. **CTAs** — free consultation, workshop sign-up, contact form *(in place; connect to real booking next)*
-7. **Mobile, accessibility, SEO** — meta, performance, WCAG basics *(meta updated; full audit pending)*
+7. **Mobile, accessibility, SEO** — portal mobile-first; marketing site desktop-first then mobile; WCAG 2.1 AA basics *(viewport + responsive CSS in place; full mobile audit before launch — see §12.1)*
 
 ### Phase B — Booking & payments (weeks 3–6)
 
@@ -359,9 +359,34 @@ Parallel track to website build — not all blocked on tech.
 | **Security** | Authentication, RBAC, encrypted data in transit and at rest |
 | **Privacy** | UK GDPR; explicit consent for health and meal data |
 | **Accessibility** | WCAG 2.1 AA for forms and dashboard |
-| **Mobile** | Responsive web first |
+| **Mobile** | **Split strategy** — portal **mobile-first**; marketing site **desktop-first** (see §12.1) |
 | **Payments** | PCI-compliant provider (e.g. Stripe); no card data on own servers |
 | **Medical** | Clear disclaimers — coaching, not clinical treatment |
+
+### 12.1 Mobile & client devices (decided)
+
+Design strategy **differs by surface**:
+
+| Surface | Design approach | Rationale |
+|---------|-----------------|-----------|
+| **Client portal** (`app.thrivewithtianna.com`) | **Mobile-first** | Primary interaction point — clients log meals on phones after eating; desktop layouts **ship alongside** mobile at launch, not as a later phase |
+| **Marketing site** (`index.html`) | **Desktop-first** | Brand and service storytelling; mobile responsive layout **after** desktop is solid |
+
+Clients log meals **on their phones after eating** — often one-handed, in under two minutes. The portal must excel on mobile. The marketing site must remain usable on phones but may prioritise desktop design first. A **native mobile app** is a future option, not required for MVP.
+
+| Phase | Delivery | Scope |
+|-------|----------|--------|
+| **Launch (MVP)** | **Responsive web** | Portal: mobile-first UX + desktop at same time; site: desktop-first with mobile pass before public launch |
+| **Phase 2–3** | **PWA (optional)** | Add to home screen, offline-tolerant meal log queue, web push for nudges (where permitted) |
+| **Future** | **Native app (iOS/Android)** | Evaluate when subscription base and retention justify app-store investment; likely React Native or Capacitor wrapper sharing portal API — **not in initial build** |
+
+**Portal:** design **mobile-first** in Figma/build; scale up to desktop with the same flows and data. Primary flows (log meal, check GL, read coach message) optimised for phone; desktop adds width, side nav, and richer charts.
+
+**Marketing site:** design desktop layout first; add/refine mobile breakpoints and nav in Phase A polish (§8). Tap targets ≥ 44px; no horizontal scroll on 320px+.
+
+**WhatsApp complement:** Many clients will use WhatsApp for nudges; the portal remains the **system of record**.
+
+**Native app trigger (future):** Consider when ≥ 200 active subscribers **or** repeated feedback requests app-store presence **or** PWA limits block a key feature (e.g. reliable background sync).
 
 ---
 
@@ -375,7 +400,7 @@ Parallel track to website build — not all blocked on tech.
 - Microsoft Entra **single- vs multi-tenant** (see `CLIENT_PORTAL_SPEC.md` §6.2)
 - Default **LLM provider** when both OpenAI and Anthropic configured
 
-**Decided:** separate exercise SKU with portal included; menu plan = Lite portal; GL per coach; Zoom; Nutritics future API; `app.thrivewithtianna.com`; localisation planned; DPIA + retention legal review required.
+**Decided:** separate exercise SKU with portal included; menu plan = Lite portal; GL per coach; Zoom; Nutritics future API; `app.thrivewithtianna.com`; localisation planned; DPIA + retention legal review required; **portal mobile-first** (desktop ships with it); **marketing site desktop-first**; native app deferred.
 
 See [`OPEN_DECISIONS.md`](./OPEN_DECISIONS.md) for full list.
 

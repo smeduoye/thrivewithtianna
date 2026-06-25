@@ -182,7 +182,7 @@ Portal access is **not** automatically bundled in every SKU.
 
 ### 4.2 Typical day (3–5 minutes total)
 
-Designed for **mobile, one-handed, after a meal**. Target: **≤ 2 minutes per meal log**.
+Designed for **mobile use after a meal** (one-handed, ≤ 2 minutes per log). **Portal: mobile-first** — phone is the primary interaction point; desktop ships alongside. **Marketing site: desktop-first**, mobile responsive pass afterwards.
 
 ```text
 Morning (optional, ~60 sec)

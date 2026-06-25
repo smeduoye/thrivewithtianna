@@ -183,7 +183,7 @@ sequenceDiagram
 
 ### 5.2 Daily client loop
 
-1. Open portal (mobile-first web).
+1. Open portal (mobile-first web — primary interaction on phone; desktop at launch).
 2. **Quick log:** weight (if weigh-day), last night’s sleep, morning energy (optional).
 3. **Meal log:** add items per meal slot with portion/weight.
 4. **Symptom check-in:** rate watchlist symptoms (0–10 or none/mild/moderate/severe).
@@ -674,10 +674,36 @@ Visual continuity: reuse Cormorant Garamond + Outfit, brand colours from `styles
 | **Privacy** | UK GDPR; lawful basis = contract + consent; data minimisation; retention policy documented |
 | **Health disclaimer** | Onboarding + chat footer: not a substitute for medical care |
 | **Accessibility** | WCAG 2.1 AA for logging forms and chat |
-| **Mobile** | Responsive web; PWA optional Phase 2 |
+| **Mobile** | **Mobile-first** — phone is the primary client interaction point; desktop layouts ship at launch alongside mobile — see §10.1; PWA optional Phase 4; native app future |
 | **Availability** | 99.5% target post-launch |
-| **Performance** | Dashboard load < 2 s on 4G; chat response streaming where supported |
+| **Performance** | Dashboard load < 2 s on 4G; chat response streaming where supported; **Lighthouse mobile performance ≥ 80** on key client screens |
 | **Audit** | Agent decisions logged 12+ months for compliance review |
+
+### 10.1 Mobile-first UX (decided)
+
+The portal is the **primary interaction point on mobile** — after meals, between appointments, in WhatsApp-adjacent workflows. **Design mobile-first:** author layouts and components for phone viewports first, then scale up to desktop at the **same launch** (desktop is not a deferred phase).
+
+| ID | Requirement | Priority |
+|----|-------------|----------|
+| MOB-1 | **Responsive layout** — usable without horizontal scroll from **320px** width upward (iPhone SE class devices) | P0 |
+| MOB-2 | **Touch targets** — interactive controls ≥ **44×44 CSS px** (WCAG 2.5.5); adequate spacing between tappable items | P0 |
+| MOB-3 | **Meal log on phone** — add a meal in **≤ 2 minutes** with ≤ 5 taps for a frequent/recent food; sticky “Log meal” affordance on dashboard | P0 |
+| MOB-4 | **Bottom-weighted navigation** — primary client nav (Home, Log, Progress, Coach) reachable one-handed on phone; bottom nav or equivalent on small viewports | P0 |
+| MOB-5 | **Readable charts** — weight/GL trends legible on mobile; pinch optional, not required; summary numbers above charts | P0 |
+| MOB-6 | **Onboarding wizard** — single-column steps on phone; no hover-only interactions; keyboard/screen-reader safe | P0 |
+| MOB-7 | **OAuth & Stripe** — signup and payment flows complete on mobile Safari and Chrome Android | P0 |
+| MOB-8 | **Desktop at launch** — same flows on wider viewports (side nav, multi-column dashboard); not mobile-only MVP | P0 |
+| MOB-9 | **Safe areas** — respect `env(safe-area-inset-*)` for notched devices | P1 |
+| MOB-10 | **PWA (Phase 4)** — web manifest, icons, optional “Add to Home Screen”; offline queue for pending meal logs | P2 |
+| MOB-11 | **Native app (future)** — out of MVP scope; when built, reuse same REST API; evaluate React Native or Capacitor after PWA learnings | Deferred |
+
+**Design & implementation notes:**
+
+- **Mobile-first:** default MUI breakpoints from `xs`/`sm` up; `useMediaQuery` to expand layout on `md+`.
+- E2E tests **prioritise mobile viewport** (Playwright iPhone 14 / Pixel profiles) for login, onboarding, meal log, dashboard; desktop smoke tests also required.
+- **Coach admin** may be desktop-primary (roster, review queue); still responsive on tablet.
+
+**Marketing site (`index.html`):** **desktop-first** — see `PLATFORM_SPEC.md` §12.1; not governed by this section.
 
 ---
 
@@ -1024,21 +1050,27 @@ Aligned with [`PLATFORM_SPEC.md`](./PLATFORM_SPEC.md) Phase C–D but expanded f
 
 - Streaming chat UX
 - Deeper pattern insights (multi-variate correlations with plain-language caveats)
-- Optional PWA / notifications
+- Optional PWA / notifications (see §10.1 MOB-10)
 - Referral codes and subscription billing hooks
+
+### Phase 5 — Native mobile app (future, not scheduled)
+
+Evaluate **iOS/Android native or hybrid app** when business metrics support it (see `PLATFORM_SPEC.md` §12.1). Reuse portal backend API; do not fork business logic into a separate codebase without strong justification.
 
 ---
 
 ## 13. UX Overview (key screens)
 
-**Client:**
+**Design principle:** **Mobile-first** — phone is the primary client surface; desktop layouts ship at the same launch. Coach admin may be desktop-primary (see §10.1).
+
+**Client (mobile-primary):**
 
 1. **Login** — Google, Microsoft, or email magic link
 2. **Onboarding wizard** — identity → contact preferences → consent → goals → baseline
 3. **Home dashboard** — today at a glance + coach message preview
-4. **Log** — tabbed: Meals | Weight | Sleep | Symptoms
-5. **Progress** — charts, badges, weekly digest
-6. **Coach chat** — portal messaging UI (WhatsApp users see note: “You can also message us on WhatsApp”)
+4. **Log** — tabbed: Meals | Weight | Sleep | Symptoms; **large tap targets**; recent foods and favourites above search
+5. **Progress** — scrollable charts + plain-language weekly summary; key metrics above charts on narrow viewports
+6. **Coach chat** — thread view optimised for thumb reach; link to WhatsApp when that is the preferred channel
 7. **My plan** — assigned menu plan PDF / structured days
 8. **Settings** — contact preferences, units, export data, delete account
 

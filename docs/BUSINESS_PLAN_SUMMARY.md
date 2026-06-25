@@ -251,6 +251,7 @@ Weight trend, GL vs target band, adherence %, sleep, symptoms, chat highlights, 
 | **Food database** | Full Thrive-curated DB at launch; future optional [Nutritics Food Data API](https://www.nutritics.com/en/product/food-data-api/) enrichment |
 | **AI** | Rules engine first; then Spring AI agent — **both OpenAI and Anthropic supported**; default provider TBC |
 | **Live sessions** | Zoom (external link) |
+| **Mobile** | **Portal: mobile-first** (primary interaction on phone; desktop at launch). **Website: desktop-first**, then mobile. PWA optional later; native app future |
 | **Localisation** | Plan for i18n; UK English at launch |
 
 **Current state:** Marketing site POC live (`index.html`). Portal not yet built — specs complete.
