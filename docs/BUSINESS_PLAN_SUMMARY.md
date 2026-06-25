@@ -6,6 +6,8 @@
 
 **Related (detail):** [`business-plan.html`](../business-plan.html) (web review) · [`PLATFORM_SPEC.md`](./PLATFORM_SPEC.md) · [`CLIENT_PORTAL_BUSINESS.md`](./CLIENT_PORTAL_BUSINESS.md) · [`COMPETITIVE_ANALYSIS.md`](./COMPETITIVE_ANALYSIS.md) · [`OPEN_DECISIONS.md`](./OPEN_DECISIONS.md)
 
+**Sync rule:** When this file changes, update [`business-plan.html`](../business-plan.html) in the same change. Skill: [`.cursor/skills/sync-business-plan-html/`](../.cursor/skills/sync-business-plan-html/SKILL.md) · validate: `python scripts/validate-business-plan-sync.py`
+
 ---
 
 ## 1. Executive summary
