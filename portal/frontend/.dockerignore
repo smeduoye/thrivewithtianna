@@ -1,0 +1,11 @@
+# Runtime image copies only dist/ and nginx.conf — exclude source to speed up context upload.
+node_modules/
+.git/
+.gitignore
+README.md
+src/
+package.json
+package-lock.json
+vite.config.ts
+tsconfig*.json
+index.html

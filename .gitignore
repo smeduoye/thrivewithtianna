@@ -1,0 +1,32 @@
+# Environment and secrets
+.env
+.env.local
+*.pem
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java / Spring Boot (portal)
+portal/backend/target/
+*.class
+
+# Node / React (portal)
+portal/frontend/node_modules/
+portal/frontend/dist/
+portal/frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+*.log
+
+# Test / coverage
+coverage/
+.nyc_output/

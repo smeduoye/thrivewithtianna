@@ -62,6 +62,7 @@ Consolidated **resolved** and **remaining open** decisions. Detail lives in link
 | T-31 | **Plan for localisation** (i18n-ready copy and architecture; UK English at launch) |
 | T-32 | Live sessions: **Zoom** (external link) |
 | T-36 | **Portal: mobile-first** (desktop at launch); **marketing site: desktop-first** then mobile; native app deferred; PWA optional Phase 4 |
+| T-37 | **MVP hosting:** Oracle Always Free A1 VM + Docker Compose + PostgreSQL container — see [`MVP_APPLICATION_SPEC.md`](./MVP_APPLICATION_SPEC.md) |
 
 ### Compliance
 

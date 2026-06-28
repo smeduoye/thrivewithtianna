@@ -1,0 +1,6 @@
+# TLS via Caddy on Oracle VM (optional — Cloudflare proxy is simpler).
+# Install caddy, place this at /etc/caddy/Caddyfile, point DNS app. → VM IP.
+
+app.thrivewithtianna.com {
+	reverse_proxy thrivewithtianna-web:80
+}

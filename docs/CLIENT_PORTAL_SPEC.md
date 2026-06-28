@@ -7,6 +7,7 @@
 
 | Document | Role |
 |----------|------|
+| [`MVP_APPLICATION_SPEC.md`](./MVP_APPLICATION_SPEC.md) | **MVP build & Oracle Always Free hosting** |
 | [`PLATFORM_SPEC.md`](./PLATFORM_SPEC.md) | Business scope, phasing, exclusions |
 | [`CLIENT_PORTAL_BUSINESS.md`](./CLIENT_PORTAL_BUSINESS.md) | Operating model: personas, journeys, coach playbook, agent voice |
 | [`COMPETITIVE_ANALYSIS.md`](./COMPETITIVE_ANALYSIS.md) | Competitors, demographics, positioning, messaging |
@@ -983,6 +984,8 @@ Static site and portal deploy independently; portal API serves all dynamic data.
 ---
 
 ## 12. Implementation Phases
+
+**MVP (Oracle Always Free + Docker):** see [`MVP_APPLICATION_SPEC.md`](./MVP_APPLICATION_SPEC.md) for consolidated scope, milestones M0–M6, and production runbook.
 
 Aligned with [`PLATFORM_SPEC.md`](./PLATFORM_SPEC.md) Phase C–D but expanded for agentic coach.
 

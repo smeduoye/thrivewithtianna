@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (Java 25 / Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+      - name: Build and test
+        working-directory: portal/backend
+        run: mvn -B verify
+
+  frontend:
+    name: Frontend (Node 22 / Vite)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: portal/frontend/package-lock.json
+      - name: Install dependencies
+        working-directory: portal/frontend
+        run: npm ci
+      - name: Type-check / lint
+        working-directory: portal/frontend
+        run: npm run lint
+      - name: Test
+        working-directory: portal/frontend
+        run: npm test
+      - name: Build
+        working-directory: portal/frontend
+        run: npm run build
+
+  docker-build:
+    name: Docker runtime image build check
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: portal/frontend/package-lock.json
+      - name: Build host artifacts
+        working-directory: portal
+        run: chmod +x scripts/build.sh && ./scripts/build.sh --artifacts-only
+      - uses: docker/setup-buildx-action@v3
+      - name: Build runtime images (no push)
+        working-directory: portal
+        run: docker compose build

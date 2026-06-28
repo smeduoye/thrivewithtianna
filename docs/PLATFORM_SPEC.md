@@ -250,6 +250,8 @@ Ordered path from static POC to launch-ready marketing site, then platform.
 
 ### Phase C — Client portal MVP (weeks 6–12)
 
+**Build spec:** [`MVP_APPLICATION_SPEC.md`](./MVP_APPLICATION_SPEC.md) — Oracle Always Free VM, Docker Compose, PostgreSQL container, ghcr.io deploy.
+
 1. Authentication (email magic link or OAuth)
 2. Meal log + portion entry
 3. Basic GL calculation (food database or curated low-GL food list)
@@ -412,6 +414,7 @@ See [`OPEN_DECISIONS.md`](./OPEN_DECISIONS.md) for full list.
 |-------|---------|
 | `index.html`, `styles.css`, `main.js` | Marketing POC — update per §8 Phase A |
 | `docs/PLATFORM_SPEC.md` | **Source of truth** for product and business scope |
+| `docs/MVP_APPLICATION_SPEC.md` | **MVP application & Oracle hosting** |
 | `docs/CLIENT_PORTAL_SPEC.md` | Client portal & agent build specification |
 | `docs/CLIENT_PORTAL_BUSINESS.md` | Client portal operating model (personas, coach playbook, agent voice) |
 | `docs/COMPETITIVE_ANALYSIS.md` | Competitor profiles, demographics, positioning |

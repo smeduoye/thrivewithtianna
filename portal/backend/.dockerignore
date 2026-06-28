@@ -1,0 +1,11 @@
+# Runtime image copies only target/backend-*.jar — exclude source to speed up context upload.
+.git/
+.gitignore
+*.iml
+.idea/
+README.md
+src/
+pom.xml
+.mvn/
+mvnw
+mvnw.cmd
