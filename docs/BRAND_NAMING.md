@@ -30,9 +30,7 @@
 
 ### Disclose the pseudonym (public)
 
-Include **Tianna, aka Wumi** at least once on the marketing site (My Story section):
-
-> Tianna, aka Wumi — my coaching name on Instagram and across this brand.
+Include **Tianna, aka Wumi** at least once on the marketing site (My Story section).
 
 Do **not** use “Tianna” alone when you mean the founder (e.g. avoid “Hi, I'm Tianna”, “sessions with Tianna”).
 
