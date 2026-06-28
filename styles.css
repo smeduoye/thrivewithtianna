@@ -788,6 +788,12 @@ em {
   font-size: 1.02rem;
 }
 
+.story-pseudonym {
+  color: var(--sage);
+  font-size: 0.98rem;
+  margin-bottom: 16px !important;
+}
+
 .story-quote {
   margin-top: 32px;
   padding: 28px 32px;

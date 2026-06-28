@@ -1,0 +1,49 @@
+name: Deploy Pages
+
+# Builds the static marketing site with content-hash cache busting on CSS/JS,
+# then publishes to GitHub Pages. Requires repo Settings → Pages → GitHub Actions.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'main.js'
+      - 'styles.css'
+      - 'business-plan.html'
+      - 'business-plan.css'
+      - 'business-plan.js'
+      - 'CNAME'
+      - 'scripts/prepare-pages-site.mjs'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy marketing site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare site with cache-busted assets
+        run: node scripts/prepare-pages-site.mjs _site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

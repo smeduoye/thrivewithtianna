@@ -27,6 +27,9 @@ yarn-error.log*
 # Docker
 *.log
 
+# GitHub Pages build output
+_site/
+
 # Test / coverage
 coverage/
 .nyc_output/

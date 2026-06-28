@@ -112,7 +112,7 @@
 
   document.getElementById('booking-form').addEventListener('submit', e => {
     handleFormSubmit(e, {
-      successMessage: 'Booking request received! Tianna will be in touch soon.',
+      successMessage: 'Booking request received! Wumi will be in touch soon.',
       onSuccess: () => closeModal(bookingModal),
       extraFields: {
         _subject: 'Booking request — Thrive with Tianna',

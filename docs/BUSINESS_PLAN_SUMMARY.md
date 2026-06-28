@@ -1,6 +1,6 @@
 # Thrive with Tianna — Business Plan Summary
 
-**Status:** Draft for review with Tianna  
+**Status:** Draft for review with Wumi  
 **Last updated:** June 2026  
 **Audience:** Founders and stakeholders — plain language, not a build spec  
 
@@ -14,7 +14,7 @@
 
 **Thrive with Tianna** is a UK-first coaching business built around **low glycemic load (low-GL) nutrition** for adults who want sustainable weight loss — not fad diets, not a slimming club, and not a medical clinic.
 
-The business combines what Tianna already does well — structured meal guidance, WhatsApp community, and personal coaching — with a **client portal** at `https://app.thrivewithtianna.com` where clients log meals, see glycemic load and progress, and receive personalised support from **“Your Thrive Coach”** (an AI assistant governed by Thrive’s rules and Tianna’s oversight).
+The business combines what Wumi already does well — structured meal guidance, WhatsApp community, and personal coaching — with a **client portal** at `https://app.thrivewithtianna.com` where clients log meals, see glycemic load and progress, and receive personalised support from **“Your Thrive Coach”** (an AI assistant governed by Thrive’s rules and Wumi’s oversight).
 
 **Revenue model:**
 
@@ -22,13 +22,13 @@ The business combines what Tianna already does well — structured meal guidance
 |-------|------------|--------|
 | **Subscription** | Self-serve signup, 5-day trial, then **£29.99/mo** (annual option TBC) | Price decided |
 | **Workshop / group** | 30-day cohort + WhatsApp peer group + full portal | **Price TBC** |
-| **1:1 coaching** | Private relationship with Tianna + full portal | **Price TBC** |
+| **1:1 coaching** | Private relationship with Wumi + full portal | **Price TBC** |
 | **Menu plans** | 1–2 week low-GL plans — **Lite portal** | Product decided |
 | **Exercise plans** | Separate SKU — portal **included** | Product decided |
 
 **Core audience:** Adults **30s–50s, men and women**, UK-first. Marketing mix target: ~60–65% women / ~25–35% men / ~10% shared or couples.
 
-**Primary competitor to watch:** [Health360](https://www.healthyandelegant.com/health360-nutritional-coach) (~£38/mo, low-GL + AI coach). Thrive wins on **founder trust, method specificity, dual-gender fit, and a clear path to real Tianna** — not on being the cheapest app.
+**Primary competitor to watch:** [Health360](https://www.healthyandelegant.com/health360-nutritional-coach) (~£38/mo, low-GL + AI coach). Thrive wins on **founder trust, method specificity, dual-gender fit, and a clear path to live coaching with Wumi** — not on being the cheapest app.
 
 **What we are not building:** food ordering, cooking fulfilment, children’s programmes, GLP-1/medicated weight loss, or competing with NHS free programmes on price.
 
@@ -40,18 +40,18 @@ The business combines what Tianna already does well — structured meal guidance
 
 Help adults lose weight sustainably through **low-GL nutrition**, personalised coaching, and community accountability — with measurable progress on a digital dashboard.
 
-### Position statement (draft — pending Tianna sign-off)
+### Position statement (draft — pending Wumi sign-off)
 
-> **Thrive with Tianna** helps busy men and women in their 30s–50s lose weight sustainably through **low glycemic load nutrition** — with a personal dashboard, an AI coach trained on your logs and Tianna’s method, and a clear path to live coaching when you want deeper support. Not a fad diet app. Not a clinic. **Structured, science-based, and human.**
+> **Thrive with Tianna** helps busy men and women in their 30s–50s lose weight sustainably through **low glycemic load nutrition** — with a personal dashboard, an AI coach trained on your logs and Wumi’s method, and a clear path to live coaching when you want deeper support. Not a fad diet app. Not a clinic. **Structured, science-based, and human.**
 
 ### Positioning pillars
 
 1. **The low-GL method** — own glycemic load and metabolic sustainability, not generic calorie counting or Noom-style psychology.
-2. **Founder-led, agent-assisted** — Tianna’s brand and oversight; not anonymous AI (Health360) or rotating dietitians (Second Nature).
+2. **Founder-led, agent-assisted** — Wumi’s brand and oversight (*Tianna, aka Wumi*, is the public coaching name); not anonymous AI (Health360) or rotating dietitians (Second Nature).
 3. **Built for busy adults 30s–50s — women and men** — men are underserved in the category; avoid “diet club” imagery.
 4. **Try it properly** — 5-day trial with card on file, then subscribe; serious enough to commit, short enough to convert.
 5. **Human community + private coach channel** — WhatsApp peer cohort (workshop) + private 1:1 agent/WhatsApp; personal health never in group channels.
-6. **Escalation to real Tianna** — subscription = portal + agent; workshop and 1:1 = premium human tiers.
+6. **Escalation to Wumi** — subscription = portal + agent; workshop and 1:1 = premium human tiers.
 
 ---
 
@@ -71,7 +71,7 @@ Help adults lose weight sustainably through **low-GL nutrition**, personalised c
                     HIGH TOUCH (human coach)
                               │
          Premium 1:1          │    Thrive workshop / 1:1
-         (£75+/session)      │    (Tianna-led)
+         (£75+/session)      │    (Wumi-led)
                               │
     ──────────────────────────┼────────────────────────── HIGH PRICE
                               │
@@ -83,7 +83,7 @@ Help adults lose weight sustainably through **low-GL nutrition**, personalised c
                     LOW TOUCH (app / content)
 ```
 
-**Thrive subscription** sits in the **middle**: more personal than Noom, less clinical than Second Nature, less premium than live 1:1 — with a **clear upgrade path** to Tianna.
+**Thrive subscription** sits in the **middle**: more personal than Noom, less clinical than Second Nature, less premium than live 1:1 — with a **clear upgrade path** to Wumi.
 
 ### Fights to avoid
 
@@ -92,7 +92,7 @@ Help adults lose weight sustainably through **low-GL nutrition**, personalised c
 - GLP-1 / medicated weight loss
 - CGM-first product (Vively £129/mo)
 - Competing with NHS free on features
-- Generic “AI coach” without Tianna governance
+- Generic “AI coach” without Wumi’s governance
 
 ---
 
@@ -104,7 +104,7 @@ Help adults lose weight sustainably through **low-GL nutrition**, personalised c
 |----------|-------------|-------------|---------------------|
 | **Subscription** (post-trial) | Dashboard, agent, logging, insights | **Full** | No (workshop only) |
 | **30-day workshop / group** | Cohort curriculum, themes, community | **Full** | **Yes** (tiered by programme) |
-| **1:1 coaching** | Sessions with Tianna + between-session support | **Full** | Optional |
+| **1:1 coaching** | Sessions with Wumi + between-session support | **Full** | Optional |
 | **Menu plans** (1–2 week) | Assigned plan, adherence, GL visibility | **Lite** | No |
 | **Exercise plans** | Plan + portal access (separate SKU) | **Included** | No |
 
@@ -119,7 +119,7 @@ Help adults lose weight sustainably through **low-GL nutrition**, personalised c
 ### Explicit exclusions (firm)
 
 - Food ordering, meal delivery, hampers, commerce
-- Cooking classes or kitchen fulfilment (by Tianna or anyone else)
+- Cooking classes or kitchen fulfilment (by Wumi or anyone else)
 - Children / family programmes
 - Exercise as primary brand lead (may appear in plans, not Instagram focus)
 
@@ -145,14 +145,14 @@ Help adults lose weight sustainably through **low-GL nutrition**, personalised c
 ### Self-serve signup flow
 
 1. Self-register (Google, Microsoft, or email)
-2. Onboarding — identity, goals, consent (mandatory fields: see [`ONBOARDING_METRICS.md`](./ONBOARDING_METRICS.md) — **Tianna to select**)
+2. Onboarding — identity, goals, consent (mandatory fields: see [`ONBOARDING_METRICS.md`](./ONBOARDING_METRICS.md) — **Wumi to select**)
 3. Enter card — no charge during trial
 4. 5-day trial — full portal + agent/coaching support
 5. Subscribe or lapse → read-only → lock after grace period
 
 Admin invite flow remains for manually onboarded workshop clients.
 
-### Open pricing questions (for Tianna session)
+### Open pricing questions (for Wumi session)
 
 | # | Question |
 |---|----------|
@@ -170,7 +170,7 @@ Admin invite flow remains for manually onboarded workshop clients.
 - Account activation (OAuth or magic link)
 - Onboarding 10–15 min — never a blank dashboard
 - First win: log one meal or weight; see first GL snapshot
-- Welcome message from Tianna (Phase 1) or approved template (Phase 2+)
+- Welcome message from Wumi (Phase 1) or approved template (Phase 2+)
 
 **Target:** time-to-first-log **< 24 hours**.
 
@@ -206,7 +206,7 @@ Admin invite flow remains for manually onboarded workshop clients.
 
 ---
 
-## 7. Coach operating model (Tianna)
+## 7. Coach operating model (Wumi)
 
 ### Daily rhythm (~15 minutes target)
 
@@ -221,7 +221,7 @@ Admin invite flow remains for manually onboarded workshop clients.
 | Priority | Trigger | Human required? |
 |----------|---------|-----------------|
 | **P0** | Red-flag symptom or crisis language | **Always** — same day |
-| **P1** | No log 3+ days | Nudge; Tianna if no response 48h |
+| **P1** | No log 3+ days | Nudge; Wumi if no response 48h |
 | **P2** | GL above target 3 days | Coaching message + swaps |
 | **P3** | Milestone (streak, day 30) | Celebration + next step |
 
@@ -229,7 +229,7 @@ Admin invite flow remains for manually onboarded workshop clients.
 
 | Phase | Coaching messages |
 |-------|-------------------|
-| **Phase 1** | 100% human (Tianna) |
+| **Phase 1** | 100% human (Wumi) |
 | **Phase 2** | Agent drafts; **all approved first 90 days** |
 | **Phase 3** | Auto-send low-risk rules only; P0 always human |
 
@@ -237,7 +237,7 @@ Admin invite flow remains for manually onboarded workshop clients.
 
 ### Session prep (5-minute scan)
 
-Weight trend, GL vs target band, adherence %, sleep, symptoms, chat highlights, suggested talking points — so Tianna spends less time reconstructing “what did you eat this week?”
+Weight trend, GL vs target band, adherence %, sleep, symptoms, chat highlights, suggested talking points — so Wumi spends less time reconstructing “what did you eat this week?”
 
 ---
 
@@ -350,16 +350,16 @@ Draft → approve queue, WhatsApp integration, Nutritics evaluation if needed.
 | Risk | Mitigation |
 |------|------------|
 | Logging feels like homework | ≤2 min per meal; favourites; copy yesterday |
-| Bot feels generic | Cite client data; Tianna approval phase; validated KB |
+| Bot feels generic | Cite client data; Wumi approval phase; validated KB |
 | WhatsApp spam | Quiet hours, opt-in, channel preference |
 | Portal vs group confusion | Onboarding copy + in-app reminder |
-| Tianna overwhelmed by review queue | Phase 1 human-only; small pilot cohort |
+| Wumi overwhelmed by review queue | Phase 1 human-only; small pilot cohort |
 | Under-40 low enrollment | Strong 5-day trial — first GL insight within 48h |
 | Competing on price with Health360 | Compete on trust, method, founder, dual-gender fit |
 
 ---
 
-## 14. Open decisions — review checklist for Tianna
+## 14. Open decisions — review checklist for Wumi
 
 Use this list in your review meeting. Full log: [`OPEN_DECISIONS.md`](./OPEN_DECISIONS.md).
 

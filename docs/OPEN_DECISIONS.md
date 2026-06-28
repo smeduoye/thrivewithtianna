@@ -31,6 +31,7 @@ Consolidated **resolved** and **remaining open** decisions. Detail lives in link
 | B-13 | Marketing mix **confirmed** — ~60–65% women / ~25–35% men / ~10% shared |
 | B-14 | Agent persona **confirmed** — **“Your Thrive Coach”** |
 | B-17 | Position statement — see [`COMPETITIVE_ANALYSIS.md`](./COMPETITIVE_ANALYSIS.md) §6.3 (pending explicit sign-off after review) |
+| B-18 | **Brand naming:** **Thrive with Tianna** (brand); founder **Wumi**; public coaching pseudonym disclosed as **Tianna, aka Wumi** — see [`BRAND_NAMING.md`](./BRAND_NAMING.md) |
 
 ### Product & UX
 
