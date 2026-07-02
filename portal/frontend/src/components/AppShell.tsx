@@ -27,7 +27,9 @@ import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-
 import { useAuth } from '../auth/AuthContext';
 import { Admin } from '../pages/Admin';
 import { Home } from '../pages/Home';
+import { Log } from '../pages/Log';
 import { Placeholder } from '../pages/Placeholder';
+import { Progress } from '../pages/Progress';
 import { brand } from '../theme';
 
 const BASE_NAV = [
@@ -149,11 +151,8 @@ export function AppShell() {
         <Container maxWidth="md">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/log" element={<Placeholder title="Log meals" phase="M2 — meal logging & GL" />} />
-            <Route
-              path="/progress"
-              element={<Placeholder title="Progress" phase="M2 — charts & streaks" />}
-            />
+            <Route path="/log" element={<Log />} />
+            <Route path="/progress" element={<Progress />} />
             <Route path="/coach" element={<Placeholder title="Coach" phase="M4 — messaging" />} />
             {isCoach ? <Route path="/admin" element={<Admin />} /> : null}
             <Route path="*" element={<Navigate to="/" replace />} />
