@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { inviteUser, listUsers } from '../api/admin';
 import { apiErrorMessage } from '../api/client';
 import { PageHeader } from '../components/PageHeader';
@@ -37,6 +38,7 @@ function statusColor(status: string): 'default' | 'success' | 'warning' | 'error
 
 export function Admin() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { data: users, isLoading, isError, error } = useQuery({
     queryKey: ['admin', 'users'],
     queryFn: listUsers,
@@ -69,7 +71,7 @@ export function Admin() {
       <PageHeader
         eyebrow="Coach"
         title="Client roster"
-        subtitle="Invite clients and review who's on the programme. Full client detail and messaging land in M4."
+        subtitle="Invite clients, open a client to see their progress, and message them directly."
       />
 
       <Card>
@@ -142,7 +144,12 @@ export function Admin() {
               </TableHead>
               <TableBody>
                 {users.map((u) => (
-                  <TableRow key={u.id}>
+                  <TableRow
+                    key={u.id}
+                    hover
+                    onClick={() => navigate(`/admin/${u.id}`)}
+                    sx={{ cursor: 'pointer' }}
+                  >
                     <TableCell>
                       {u.firstName} {u.lastName}
                     </TableCell>

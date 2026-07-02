@@ -26,19 +26,20 @@ import { useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { Admin } from '../pages/Admin';
+import { ClientDetail } from '../pages/ClientDetail';
+import { Coach } from '../pages/Coach';
 import { Home } from '../pages/Home';
 import { Log } from '../pages/Log';
-import { Placeholder } from '../pages/Placeholder';
 import { Progress } from '../pages/Progress';
 import { brand } from '../theme';
 
-const BASE_NAV = [
+const CORE_NAV = [
   { path: '/', label: 'Home', icon: <HomeIcon /> },
   { path: '/log', label: 'Log', icon: <RestaurantIcon /> },
   { path: '/progress', label: 'Progress', icon: <TrendingUpIcon /> },
-  { path: '/coach', label: 'Coach', icon: <MonitorHeartIcon /> },
 ];
 
+const CLIENT_COACH_NAV = { path: '/coach', label: 'Coach', icon: <MonitorHeartIcon /> };
 const ADMIN_NAV = { path: '/admin', label: 'Clients', icon: <PeopleIcon /> };
 
 export function AppShell() {
@@ -50,10 +51,13 @@ export function AppShell() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const isCoach = user?.role === 'COACH' || user?.role === 'ADMIN';
-  const navItems = useMemo(() => (isCoach ? [...BASE_NAV, ADMIN_NAV] : BASE_NAV), [isCoach]);
+  const navItems = useMemo(
+    () => (isCoach ? [...CORE_NAV, ADMIN_NAV] : [...CORE_NAV, CLIENT_COACH_NAV]),
+    [isCoach],
+  );
 
   const currentIndex = Math.max(
-    navItems.findIndex((item) => item.path === location.pathname),
+    navItems.findIndex((item) => item.path === location.pathname || location.pathname.startsWith(`${item.path}/`)),
     0,
   );
 
@@ -153,8 +157,9 @@ export function AppShell() {
             <Route path="/" element={<Home />} />
             <Route path="/log" element={<Log />} />
             <Route path="/progress" element={<Progress />} />
-            <Route path="/coach" element={<Placeholder title="Coach" phase="M4 — messaging" />} />
+            <Route path="/coach" element={<Coach />} />
             {isCoach ? <Route path="/admin" element={<Admin />} /> : null}
+            {isCoach ? <Route path="/admin/:id" element={<ClientDetail />} /> : null}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Container>
