@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.thrivewithtianna.auth.JwtAuthenticationFilter;
+import com.thrivewithtianna.auth.JwtService;
 import com.thrivewithtianna.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(HealthController.class)
-@Import(SecurityConfig.class)
+@Import({ SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class })
 class HealthControllerTest {
 
     @Autowired

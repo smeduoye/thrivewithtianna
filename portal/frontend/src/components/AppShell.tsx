@@ -1,45 +1,65 @@
 import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import PeopleIcon from '@mui/icons-material/People';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import {
   AppBar,
+  Avatar,
   Box,
   BottomNavigation,
   BottomNavigationAction,
   Container,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
   Paper,
   Toolbar,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
+import { Admin } from '../pages/Admin';
 import { Home } from '../pages/Home';
 import { Placeholder } from '../pages/Placeholder';
 import { brand } from '../theme';
 
-const NAV_ITEMS = [
+const BASE_NAV = [
   { path: '/', label: 'Home', icon: <HomeIcon /> },
   { path: '/log', label: 'Log', icon: <RestaurantIcon /> },
   { path: '/progress', label: 'Progress', icon: <TrendingUpIcon /> },
   { path: '/coach', label: 'Coach', icon: <MonitorHeartIcon /> },
-] as const;
+];
+
+const ADMIN_NAV = { path: '/admin', label: 'Clients', icon: <PeopleIcon /> };
 
 export function AppShell() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
   const navigate = useNavigate();
-  const [navValue, setNavValue] = useState(
-    NAV_ITEMS.findIndex((item) => item.path === location.pathname) || 0,
+  const { user, logout } = useAuth();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const isCoach = user?.role === 'COACH' || user?.role === 'ADMIN';
+  const navItems = useMemo(() => (isCoach ? [...BASE_NAV, ADMIN_NAV] : BASE_NAV), [isCoach]);
+
+  const currentIndex = Math.max(
+    navItems.findIndex((item) => item.path === location.pathname),
+    0,
   );
 
   const handleNavChange = (_: unknown, index: number) => {
-    setNavValue(index);
-    navigate(NAV_ITEMS[index].path);
+    navigate(navItems[index].path);
   };
+
+  const initials = user ? `${user.firstName[0] ?? ''}${user.lastName[0] ?? ''}`.toUpperCase() : '';
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', pb: isMobile ? 7 : 0 }}>
@@ -64,17 +84,64 @@ export function AppShell() {
           </Box>
           <Typography
             variant="h6"
-            sx={{
-              fontFamily: '"Cormorant Garamond", serif',
-              fontWeight: 600,
-              flexGrow: 1,
-            }}
+            sx={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, flexGrow: 1 }}
           >
             Thrive with Tianna
           </Typography>
-          <Typography variant="caption" sx={{ opacity: 0.7, display: { xs: 'none', sm: 'block' } }}>
-            Client portal · MVP
-          </Typography>
+
+          {!isMobile ? (
+            <Box sx={{ display: 'flex', gap: 1, mr: 2 }}>
+              {navItems.map((item, index) => (
+                <Typography
+                  key={item.path}
+                  component="button"
+                  onClick={() => navigate(item.path)}
+                  sx={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: '#fff',
+                    opacity: index === currentIndex ? 1 : 0.7,
+                    fontWeight: index === currentIndex ? 600 : 400,
+                    fontFamily: 'inherit',
+                    fontSize: '0.95rem',
+                  }}
+                >
+                  {item.label}
+                </Typography>
+              ))}
+            </Box>
+          ) : null}
+
+          <IconButton onClick={(e) => setAnchorEl(e.currentTarget)} size="small">
+            <Avatar sx={{ width: 32, height: 32, bgcolor: brand.gold, fontSize: '0.85rem' }}>
+              {initials}
+            </Avatar>
+          </IconButton>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+            <MenuItem disabled sx={{ opacity: '1 !important' }}>
+              <Box>
+                <Typography variant="body2" fontWeight={600}>
+                  {user?.firstName} {user?.lastName}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {user?.email}
+                </Typography>
+              </Box>
+            </MenuItem>
+            <Divider />
+            <MenuItem
+              onClick={() => {
+                setAnchorEl(null);
+                logout();
+              }}
+            >
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              Sign out
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
 
@@ -82,18 +149,13 @@ export function AppShell() {
         <Container maxWidth="md">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route
-              path="/log"
-              element={<Placeholder title="Log meals" phase="M2 — meal logging & GL" />}
-            />
+            <Route path="/log" element={<Placeholder title="Log meals" phase="M2 — meal logging & GL" />} />
             <Route
               path="/progress"
               element={<Placeholder title="Progress" phase="M2 — charts & streaks" />}
             />
-            <Route
-              path="/coach"
-              element={<Placeholder title="Coach" phase="M4 — messaging" />}
-            />
+            <Route path="/coach" element={<Placeholder title="Coach" phase="M4 — messaging" />} />
+            {isCoach ? <Route path="/admin" element={<Admin />} /> : null}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Container>
@@ -101,8 +163,8 @@ export function AppShell() {
 
       {isMobile ? (
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1100 }} elevation={8}>
-          <BottomNavigation value={navValue} onChange={handleNavChange} showLabels>
-            {NAV_ITEMS.map((item) => (
+          <BottomNavigation value={currentIndex} onChange={handleNavChange} showLabels>
+            {navItems.map((item) => (
               <BottomNavigationAction key={item.path} label={item.label} icon={item.icon} />
             ))}
           </BottomNavigation>

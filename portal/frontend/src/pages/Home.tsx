@@ -12,12 +12,12 @@ import { PageHeader } from '../components/PageHeader';
 import { brand } from '../theme';
 
 const ROADMAP = [
-  { id: 'M0', label: 'Foundation scaffold', status: 'active' as const },
-  { id: 'M1', label: 'Auth & onboarding', status: 'planned' as const },
+  { id: 'M0', label: 'Foundation scaffold', status: 'done' as const },
+  { id: 'M1', label: 'Auth & onboarding', status: 'active' as const },
   { id: 'M2', label: 'Logging & GL dashboard', status: 'planned' as const },
   { id: 'M3', label: 'Stripe billing', status: 'planned' as const },
   { id: 'M4', label: 'Coach messaging', status: 'planned' as const },
-  { id: 'M5', label: 'Oracle production deploy', status: 'planned' as const },
+  { id: 'M5', label: 'Production deploy (AWS + HTTPS)', status: 'done' as const },
 ];
 
 export function Home() {
@@ -76,10 +76,21 @@ export function Home() {
                 <Chip
                   label={item.id}
                   size="small"
-                  color={item.status === 'active' ? 'primary' : 'default'}
-                  variant={item.status === 'active' ? 'filled' : 'outlined'}
+                  color={
+                    item.status === 'active'
+                      ? 'primary'
+                      : item.status === 'done'
+                        ? 'success'
+                        : 'default'
+                  }
+                  variant={item.status === 'planned' ? 'outlined' : 'filled'}
                 />
-                <Typography variant="body2">{item.label}</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ textDecoration: item.status === 'done' ? 'line-through' : 'none' }}
+                >
+                  {item.label}
+                </Typography>
               </Stack>
             ))}
           </Stack>
