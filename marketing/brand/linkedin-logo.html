@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thrive with Tianna — LinkedIn logo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      width: 1024px;
+      height: 1024px;
+      overflow: hidden;
+      background: #F7F5F0;
+    }
+
+    .linkedin-logo {
+      width: 1024px;
+      height: 1024px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 28px;
+      background: #F7F5F0;
+    }
+
+    .logo-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      text-align: center;
+      width: 100%;
+      transform: scale(1.12);
+      transform-origin: center center;
+    }
+
+    .linkedin-logo .logo-mark {
+      width: 150px;
+      height: 150px;
+      font-size: 5.5rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .logo-wordmark {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      line-height: 0.95;
+      width: 100%;
+    }
+
+    .logo-thrive {
+      font-family: var(--font-serif);
+      font-size: 15.5rem;
+      font-weight: 600;
+      color: var(--forest);
+      letter-spacing: -0.03em;
+    }
+
+    .logo-with {
+      font-family: var(--font-serif);
+      font-size: 10.5rem;
+      font-weight: 500;
+      color: var(--forest);
+      letter-spacing: 0;
+    }
+
+    .logo-with em {
+      font-style: italic;
+      color: var(--sage);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="linkedin-logo" aria-label="Thrive with Tianna logo">
+    <div class="logo-stack">
+      <span class="logo-mark" aria-hidden="true">T</span>
+      <div class="logo-wordmark">
+        <span class="logo-thrive">Thrive</span>
+        <span class="logo-with">with <em>Tianna</em></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

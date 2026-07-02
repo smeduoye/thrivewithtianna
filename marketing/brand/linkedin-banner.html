@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thrive with Tianna — LinkedIn banner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      width: 1584px;
+      height: 396px;
+      overflow: hidden;
+      background: #2C3E2D;
+    }
+
+    /* Homepage hero, fixed LinkedIn canvas (1584×396) */
+    .linkedin-banner {
+      position: relative;
+      width: 1584px;
+      height: 396px;
+      min-height: 0;
+      display: block;
+      text-align: left;
+    }
+
+    .linkedin-banner .hero-bg img {
+      object-position: center 35%;
+    }
+
+    .linkedin-banner .hero-overlay {
+      background: linear-gradient(
+        105deg,
+        rgba(44, 62, 45, 0.82) 0%,
+        rgba(44, 62, 45, 0.72) 42%,
+        rgba(44, 62, 45, 0.45) 100%
+      );
+    }
+
+    /* Clear bottom-left profile-photo zone on personal LinkedIn */
+    .linkedin-banner .hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: none;
+      padding: 0 72px 0 300px;
+      margin: 0;
+    }
+
+    .linkedin-banner .hero-eyebrow {
+      margin-bottom: 10px;
+      font-size: 0.68rem;
+    }
+
+    .linkedin-banner h1 {
+      font-size: 3.25rem;
+      margin-bottom: 12px;
+      line-height: 1.05;
+    }
+
+    .linkedin-banner .hero-tagline {
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      max-width: 720px;
+      margin-left: 0;
+      margin-right: 0;
+      line-height: 1.55;
+    }
+
+    .linkedin-banner .hero-credentials {
+      font-size: 0.72rem;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero linkedin-banner" aria-label="Thrive with Tianna LinkedIn banner">
+    <div class="hero-bg">
+      <img src="../../images/instagram/post-01.jpg" alt="" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Nutrition &amp; Lifestyle Coaching</p>
+      <h1>Thrive with <em>Tianna</em></h1>
+      <p class="hero-tagline">Rebalance digestion, metabolism, and weight with a structured low-glycemic approach — rooted in science, guided with care.</p>
+      <div class="hero-credentials">
+        <span>Qualified Nutrition &amp; Lifestyle Coach</span>
+        <span class="divider">·</span>
+        <span>Low-GL Weight Loss Specialist</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

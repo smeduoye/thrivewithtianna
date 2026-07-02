@@ -1,4 +1,5 @@
-# Production compose — pull images from ghcr.io (Oracle VM / any Docker host).
+# Production compose — pull images from ghcr.io (AWS EC2, Oracle VM, or any Docker host).
+# Images are multi-arch (linux/amd64 + linux/arm64) so they run on x86 or Graviton/A1.
 # Copy with .env to server; see infrastructure/oracle-always-free-runbook.md
 #
 #   docker compose -f docker-compose.prod.yml pull

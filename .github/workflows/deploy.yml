@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy to Oracle VM
+    name: Deploy to production host
     runs-on: ubuntu-latest
     if: >-
       ${{ (github.event_name == 'workflow_dispatch' ||
@@ -37,6 +37,56 @@ jobs:
             echo "configured=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Ensure Docker & Compose are installed
+        if: steps.guard.outputs.configured == 'true'
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          script: |
+            set -euo pipefail
+
+            if ! command -v docker >/dev/null 2>&1; then
+              echo "Docker not found — installing..."
+              if command -v dnf >/dev/null 2>&1; then
+                sudo dnf install -y docker
+              elif command -v yum >/dev/null 2>&1; then
+                sudo yum install -y docker
+              elif command -v apt-get >/dev/null 2>&1; then
+                sudo apt-get update
+                sudo apt-get install -y docker.io
+              else
+                echo "No supported package manager (dnf/yum/apt-get) found" >&2
+                exit 1
+              fi
+            else
+              echo "Docker already installed: $(docker --version)"
+            fi
+
+            # Start Docker and allow the deploy user to use it
+            sudo systemctl enable --now docker
+            sudo usermod -aG docker "$(whoami)" || true
+
+            # Ensure the Compose plugin is available
+            if ! sudo docker compose version >/dev/null 2>&1; then
+              echo "Docker Compose plugin not found — installing..."
+              case "$(uname -m)" in
+                x86_64) COMPOSE_ARCH=x86_64 ;;
+                aarch64|arm64) COMPOSE_ARCH=aarch64 ;;
+                *) echo "Unsupported arch: $(uname -m)" >&2; exit 1 ;;
+              esac
+              PLUGIN_DIR=/usr/libexec/docker/cli-plugins
+              sudo mkdir -p "$PLUGIN_DIR"
+              sudo curl -fSL "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-${COMPOSE_ARCH}" -o "$PLUGIN_DIR/docker-compose"
+              sudo chmod +x "$PLUGIN_DIR/docker-compose"
+            fi
+
+            sudo docker --version
+            sudo docker compose version
+            mkdir -p "${{ secrets.DEPLOY_PATH }}"
+
       - name: Copy production compose file to server
         if: steps.guard.outputs.configured == 'true'
         uses: appleboy/scp-action@v0.1.7
@@ -49,6 +99,50 @@ jobs:
           target: ${{ secrets.DEPLOY_PATH }}
           strip_components: 1
 
+      - name: Write server .env from GitHub secrets
+        if: steps.guard.outputs.configured == 'true'
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          ENV_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          ENV_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          ENV_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          ENV_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ENV_FRONTEND_ORIGIN: ${{ secrets.FRONTEND_ORIGIN }}
+          ENV_API_IMAGE: ${{ secrets.API_IMAGE }}
+          ENV_WEB_IMAGE: ${{ secrets.WEB_IMAGE }}
+          ENV_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ENV_ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          envs: ENV_POSTGRES_DB,ENV_POSTGRES_USER,ENV_POSTGRES_PASSWORD,ENV_JWT_SECRET,ENV_FRONTEND_ORIGIN,ENV_API_IMAGE,ENV_WEB_IMAGE,ENV_OPENAI_API_KEY,ENV_ANTHROPIC_API_KEY
+          script: |
+            set -euo pipefail
+
+            if [ -z "${ENV_POSTGRES_PASSWORD:-}" ] || [ -z "${ENV_JWT_SECRET:-}" ]; then
+              echo "POSTGRES_PASSWORD and JWT_SECRET secrets are required" >&2
+              exit 1
+            fi
+
+            mkdir -p "${{ secrets.DEPLOY_PATH }}"
+            ENV_FILE="${{ secrets.DEPLOY_PATH }}/.env"
+            umask 077
+            {
+              echo "POSTGRES_DB=${ENV_POSTGRES_DB:-thrive}"
+              echo "POSTGRES_USER=${ENV_POSTGRES_USER:-thrive}"
+              echo "POSTGRES_PASSWORD=${ENV_POSTGRES_PASSWORD}"
+              echo "JWT_SECRET=${ENV_JWT_SECRET}"
+              echo "FRONTEND_ORIGIN=${ENV_FRONTEND_ORIGIN:-https://app.thrivewithtianna.com}"
+              echo "API_IMAGE=${ENV_API_IMAGE:-ghcr.io/smeduoye/thrivewithtianna-api:latest}"
+              echo "WEB_IMAGE=${ENV_WEB_IMAGE:-ghcr.io/smeduoye/thrivewithtianna-web:latest}"
+              [ -n "${ENV_OPENAI_API_KEY:-}" ] && echo "OPENAI_API_KEY=${ENV_OPENAI_API_KEY}"
+              [ -n "${ENV_ANTHROPIC_API_KEY:-}" ] && echo "ANTHROPIC_API_KEY=${ENV_ANTHROPIC_API_KEY}"
+            } > "$ENV_FILE"
+            chmod 600 "$ENV_FILE"
+            echo "Wrote $ENV_FILE ($(grep -c . "$ENV_FILE") lines)"
+
       - name: Pull images and restart stack
         if: steps.guard.outputs.configured == 'true'
         uses: appleboy/ssh-action@v1.2.0
@@ -60,7 +154,9 @@ jobs:
           script: |
             set -euo pipefail
             cd "${{ secrets.DEPLOY_PATH }}"
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-            docker compose -f docker-compose.prod.yml pull
-            docker compose -f docker-compose.prod.yml up -d
-            docker image prune -f
+            # Use sudo so this works on the first deploy, before the docker
+            # group membership applies to a fresh SSH session.
+            echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            sudo docker compose -f docker-compose.prod.yml pull
+            sudo docker compose -f docker-compose.prod.yml up -d
+            sudo docker image prune -f
