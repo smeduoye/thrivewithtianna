@@ -104,12 +104,37 @@ Portal answers on `http://<elastic-ip>` (port 80).
 
 ## 6. DNS & TLS
 
-| Record | Target |
-|--------|--------|
-| `app.thrivewithtianna.com` | EC2 Elastic IP |
+DNS for `thrivewithtianna.com` is at **Name.com** (nameservers `ns*.name.com`). The marketing
+site (`thrivewithtianna.com`) stays on GitHub Pages — only add a record for the portal subdomain.
 
-- **Cloudflare proxy** (recommended): free TLS, no cert on the box. SSL mode Full.
-- **Caddy alternative:** see [`Caddyfile.example`](./Caddyfile.example) for automatic Let's Encrypt.
+### 6.1 Add the portal DNS record (Name.com)
+
+1. Sign in at [name.com](https://www.name.com) → **My Domains** → **thrivewithtianna.com** → **DNS Records**.
+2. Add an **A record**:
+   - **Host:** `app`
+   - **Answer / Value:** your EC2 Elastic IP (e.g. `13.48.108.246`)
+   - **TTL:** `300` (or default)
+3. Save. Propagation is usually a few minutes; verify with `nslookup app.thrivewithtianna.com`.
+
+Do **not** change the apex (`@`) A records — those point at GitHub Pages for the marketing site.
+
+### 6.2 HTTPS (automatic — Caddy in Docker)
+
+`docker-compose.prod.yml` includes a **Caddy** container that:
+
+- Listens on ports **80** and **443** (security group must allow both).
+- Obtains a **Let's Encrypt** certificate for `APP_DOMAIN` (default `app.thrivewithtianna.com`) once DNS resolves to this host.
+- Reverse-proxies to the `web` (nginx) container.
+
+After DNS propagates, open `https://app.thrivewithtianna.com`. First cert issuance can take 1–2 minutes;
+check Caddy logs if needed: `sudo docker logs thrivewithtianna-caddy`.
+
+Optional GitHub secret `APP_DOMAIN` overrides the default hostname written to `.env`.
+
+### 6.3 Cloudflare alternative
+
+If you later move DNS to Cloudflare, you can proxy `app` through Cloudflare instead (SSL mode **Full**)
+and remove the Caddy service — but Name.com + Caddy works without migrating DNS.
 
 OAuth redirect URIs and Stripe webhooks must use the **HTTPS** production URL.
 

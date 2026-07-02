@@ -1,5 +1,5 @@
-# TLS via Caddy on Oracle VM (optional — Cloudflare proxy is simpler).
-# Install caddy, place this at /etc/caddy/Caddyfile, point DNS app. → VM IP.
+# Legacy standalone Caddy example (host-installed).
+# Production uses the Caddy container in docker-compose.prod.yml — see Caddyfile.
 
 app.thrivewithtianna.com {
 	reverse_proxy thrivewithtianna-web:80

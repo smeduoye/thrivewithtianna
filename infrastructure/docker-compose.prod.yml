@@ -55,15 +55,34 @@ services:
     image: ${WEB_IMAGE:-ghcr.io/smeduoye/thrivewithtianna-web:latest}
     container_name: thrivewithtianna-web
     restart: unless-stopped
-    ports:
-      - "${FRONTEND_PORT:-80}:80"
     depends_on:
       - api
     networks:
       - thrive
 
+  caddy:
+    image: caddy:2-alpine
+    container_name: thrivewithtianna-caddy
+    restart: unless-stopped
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:-app.thrivewithtianna.com}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    networks:
+      - thrive
+
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:
 
 networks:
   thrive:

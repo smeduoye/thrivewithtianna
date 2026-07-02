@@ -1,0 +1,11 @@
+# TLS via Caddy — automatic Let's Encrypt when DNS points at this host.
+# {$APP_DOMAIN} is set from .env (default app.thrivewithtianna.com).
+
+{$APP_DOMAIN:app.thrivewithtianna.com} {
+	reverse_proxy web:80
+}
+
+# HTTP fallback for Elastic IP / pre-DNS smoke tests
+:80 {
+	reverse_proxy web:80
+}
