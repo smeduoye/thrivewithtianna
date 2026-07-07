@@ -75,22 +75,26 @@ curl -s http://localhost:8080/actuator/health   # via api container network if n
 
 ## 5. Backups
 
-Daily cron on VM (`crontab -e`):
+Same scripts as AWS: `infrastructure/scripts/pg-backup.sh` and `pg-restore.sh`. The deploy workflow installs a daily **03:00 UTC** cron and keeps **14 days** of dumps in `$DEPLOY_PATH/backups/`.
+
+Manual backup:
 
 ```bash
-0 3 * * * docker exec thrivewithtianna-postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" | gzip > /home/ubuntu/backups/thrive-$(date +\%F).sql.gz
+cd ~/thrive
+./scripts/pg-backup.sh
 ```
 
-- Create `~/backups`; rotate after 14 days.
-- Optionally upload to OCI Object Storage with `oci cli`.
-
-### Restore test
+Restore test (stop API first):
 
 ```bash
-gunzip -c backup.sql.gz | docker exec -i thrivewithtianna-postgres psql -U thrive thrive
+sudo docker compose -f docker-compose.prod.yml stop api
+./scripts/pg-restore.sh backups/thrive-YYYY-MM-DD.sql.gz
+sudo docker compose -f docker-compose.prod.yml start api
 ```
 
-Run once before pilot launch.
+Optionally upload `backups/` to OCI Object Storage with `oci cli`.
+
+Run one restore test before pilot launch.
 
 ---
 

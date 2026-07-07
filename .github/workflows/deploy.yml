@@ -95,9 +95,33 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT || 22 }}
-          source: infrastructure/docker-compose.prod.yml,infrastructure/Caddyfile
+          source: infrastructure/docker-compose.prod.yml,infrastructure/Caddyfile,infrastructure/scripts/pg-backup.sh,infrastructure/scripts/pg-restore.sh
           target: ${{ secrets.DEPLOY_PATH }}
           strip_components: 1
+
+      - name: Install daily Postgres backup cron
+        if: steps.guard.outputs.configured == 'true'
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            DEPLOY_PATH="${{ secrets.DEPLOY_PATH }}"
+            BACKUP_SCRIPT="${DEPLOY_PATH}/scripts/pg-backup.sh"
+            RESTORE_SCRIPT="${DEPLOY_PATH}/scripts/pg-restore.sh"
+            BACKUP_DIR="${DEPLOY_PATH}/backups"
+
+            mkdir -p "${DEPLOY_PATH}/scripts" "$BACKUP_DIR"
+            chmod +x "$BACKUP_SCRIPT" "$RESTORE_SCRIPT"
+
+            CRON_LINE="0 3 * * * ${BACKUP_SCRIPT} >> ${BACKUP_DIR}/cron.log 2>&1"
+            ( crontab -l 2>/dev/null | grep -Fv "$BACKUP_SCRIPT" || true; echo "$CRON_LINE" ) | crontab -
+
+            echo "Backup cron installed (daily 03:00 UTC):"
+            crontab -l | grep pg-backup.sh
 
       - name: Write server .env from GitHub secrets
         if: steps.guard.outputs.configured == 'true'

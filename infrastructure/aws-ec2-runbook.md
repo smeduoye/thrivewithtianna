@@ -140,13 +140,38 @@ OAuth redirect URIs and Stripe webhooks must use the **HTTPS** production URL.
 
 ## 7. Backups
 
-Daily `pg_dump` cron (`crontab -e`):
+Daily logical backups run automatically via the deploy workflow.
+
+| Item | Location |
+|------|----------|
+| Backup script | `~/thrive/scripts/pg-backup.sh` (or `$DEPLOY_PATH/scripts/`) |
+| Backup files | `~/thrive/backups/thrive-YYYY-MM-DD.sql.gz` |
+| Logs | `~/thrive/backups/backup.log`, `cron.log` |
+| Schedule | **03:00 UTC** daily (cron) |
+| Retention | **14 days** (older `.sql.gz` files deleted automatically) |
+
+### Manual backup (any time)
 
 ```bash
-0 3 * * * docker exec thrivewithtianna-postgres pg_dump -U thrive thrive | gzip > /home/ec2-user/backups/thrive-$(date +\%F).sql.gz
+cd ~/thrive   # your DEPLOY_PATH
+./scripts/pg-backup.sh
+ls -lh backups/
 ```
 
-Create `~/backups`, rotate after 14 days, optionally sync to S3. Test one restore before pilot.
+### Restore (test before pilot)
+
+Stop the API to avoid writes during restore:
+
+```bash
+cd ~/thrive
+sudo docker compose -f docker-compose.prod.yml stop api
+./scripts/pg-restore.sh backups/thrive-2026-07-04.sql.gz
+sudo docker compose -f docker-compose.prod.yml start api
+```
+
+### Optional: off-site copy
+
+Sync `backups/` to S3 periodically (e.g. `aws s3 sync backups/ s3://your-bucket/thrive-backups/`) for disaster recovery if the EC2 volume is lost.
 
 ## 8. Troubleshooting
 
